@@ -2,19 +2,35 @@ import express from 'express';
 import validate from 'express-validation';
 import {
   getMovementsSchema,
+  getMovementSchema,
+  addMovementsSchema,
 } from './schema';
 import {
-  getMovement
+  getMovements,
+  getMovement,
+  addMovement,
 } from '../../models/movements';
 
 const router = express.Router();
 
-router.get('/:movementId', validate(getMovementsSchema), ({ params }, res, next) => {
+router.get('/get', validate(getMovementsSchema), ({ query }, res, next) => {
+  const { skip, limit } = query;
+  getMovements(skip, limit)
+  .then(payload => res.status(200).json({ payload }))
+  .catch(err => next(err));
+});
+
+router.get('/:movementId', validate(getMovementSchema), ({ params }, res, next) => {
   const { movementId } = params;
-  // getMovement(movementId)
-  // .then(payload => res.status(200).json({payload}))
-  // .catch( err => next(err));
-  res.status(200).json({payload: getMovement(movementId)})
-})
+  getMovement(movementId)
+  .then(payload => res.status(200).json({ payload }))
+  .catch(err => next(err));
+});
+
+router.post('/addMovement', validate(addMovementsSchema), ({ body }, res, next) => {
+  addMovement(body)
+  .then(payload => res.status(200).json({ payload }))
+  .catch(err => next(err));
+});
 
 export default router;

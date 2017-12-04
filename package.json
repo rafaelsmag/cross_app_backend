@@ -4,9 +4,17 @@
   "description": "Backend do aplicativo de crossfit",
   "main": "index.js",
   "scripts": {
+    "start": "node dist/app.js",
+    "postinstall": "npm run build",
+    "build": "./node_modules/.bin/babel src --out-dir dist --source-maps",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/app.js --exec ./node_modules/.bin/babel-node",
-    "dev-win": "nodemon src/app.js --exec babel-node"
+    "dev-win": "nodemon src/app.js --exec babel-node",
+    "heroku-postbuild": "npm install",
+    "server": "nodemon src/app.js --exec babel-node"
+  },
+  "engines": {
+    "node": "8.9.1"
   },
   "repository": {
     "type": "git",
@@ -20,6 +28,7 @@
   "homepage": "https://github.com/rafaelsmag/cross_app_backend#readme",
   "devDependencies": {
     "babel-cli": "^6.24.0",
+    "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.1",
     "babel-loader": "^6.4.1",
     "babel-plugin-inline-json-import": "^0.2.1",
@@ -32,13 +41,19 @@
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-import": "^2.6.0",
     "eslint-plugin-jsx-a11y": "^5.1.0",
+    "eslint-plugin-react": "^7.5.1",
     "nodemon": "^1.12.1"
   },
   "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "express-validation": "^1.0.2",
     "joi": "10.6.0",
+    "mongoose": "^4.13.6",
     "morgan": "^1.9.0"
   }
 }
